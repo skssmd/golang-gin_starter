@@ -119,73 +119,102 @@ Delete Instance
 DELETE /control/users/1
 ````
 ## 5. Advanced Query Endpoint (/control/:model/q/:query)
-Query Syntax
-= : Equality (age=25)
 
-~ : LIKE operator (username~john → username LIKE '%john%')
 
-{ } : IN clause (id{1,2,3} → id IN (1,2,3))
+Perform advanced queries on model instances using a flexible syntax. Supports `GET`, `PUT`, and `DELETE` methods.
 
-( ) : BETWEEN (age(20,30) → age BETWEEN 20 AND 30)
+---
 
-& : AND operator (age=25&country=US)
+## Syntax
 
-| : OR operator (status=pending|status=approved)
+| Operator | Description                          | Example                     | SQL Equivalent                  |
+|----------|--------------------------------------|-----------------------------|---------------------------------|
+| `=`      | Equality                             | `age=25`                    | `age = 25`                     |
+| `~`      | `LIKE` operator (wildcard search)    | `username~john`             | `username LIKE '%john%'`       |
+| `{ }`    | `IN` clause (multiple values)        | `id{1,2,3}`                 | `id IN (1, 2, 3)`              |
+| `( )`    | `BETWEEN` (range)                    | `age(20,30)`                | `age BETWEEN 20 AND 30`        |
+| `&`      | Logical `AND` (within a group)       | `age=25&country=US`         | `age = 25 AND country = 'US'`  |
+| `\|`     | Logical `OR` (between groups)        | `status=pending\|status=approved` | `(status = 'pending') OR (status = 'approved')` |
 
-Example Queries
-Get users named "John" (LIKE):
+---
+
+## Examples
+
+### 1. Get Users with a Specific Username (LIKE)
+Request
+````
 GET /control/users/q/username~john
+````
+SQL Equivalent
+````sql
 
-Get payments between 
-100
-a
-n
-d
-100and500:
-GET /control/Payment/q/Amount(100,500)
+SELECT * FROM users WHERE username LIKE '%john%'
+Response
+//Returns all users with a username containing john.
+````
 
-Combined conditions (AND/OR):
-GET /control/users/q/age=30_|_country=US&role=admin
-(Translates to (age=30) OR (country=US AND role=admin))
-
-Postman Examples
-Query with Multiple Conditions
-Request:
-
-Copy
-GET /control/users/q/username~john_&_age(25,35)
-SQL Equivalent:
-
-sql
-Copy
+### 2. Get Verified Users
+Request
+````
+GET /control/users/q/IsVerified=true
+````
+SQL Equivalent
+````sql
+SELECT * FROM users WHERE is_verified = true
+// Returns all users where IsVerified is true.
+````
+## 3. Get Users with a Specific First Name and Last Name
+Request
+````
+GET /control/users/q/FirstName=John_&_LastName=Doe
+````
+SQL Equivalent
+````sql
 SELECT * FROM users 
-WHERE (username LIKE '%john%') AND (age BETWEEN 25 AND 35)
-Update Multiple Records
-Request:
-
-Copy
-PUT /control/users/q/status=pending&role=user
-Body:
-
-json
+WHERE first_name = 'John' AND last_name = 'Doe'
+//Returns users with FirstName = "John" and LastName = "Doe".
+````
+## 4. Get Users Created Between Two Dates
+Request
+````
+GET /control/users/q/CreatedAt(2023-01-01,2023-12-31)
+````
+SQL Equivalent
+````
+SELECT * FROM users 
+WHERE created_at BETWEEN '2023-01-01' AND '2023-12-31'
+//Returns users created between January 1, 2023, and December 31, 2023.
+````
+## 5. Get Admin or Superuser Users
+Request
+````
+GET /control/users/q/IsAdmin=true_|_IsSuperuser=true
+````
+SQL Equivalent
+```sql
+SELECT * FROM users 
+WHERE is_admin = true OR is_superuser = true
+//Returns users who are either admins or superusers.
+````
+#6. Update Multiple Users (Set as Verified)
+Request
+````
+PUT /control/users/q/IsVerified=false
+````
+Body
+````json
 Copy
 {
-  "status": "approved"
+  "IsVerified": true
 }
-Action: Updates all users with status=pending AND role=user.
+````
+Action
+Updates all users where IsVerified = false to IsVerified = true.
 
-Notes
-URL Encoding:
-Encode special characters in query parameters (e.g., { → %7B, } → %7D).
-
-Security:
-
-Use caution with DELETE endpoints.
-
-AllowGlobalUpdate: true is enabled for batch deletes.
-
-Responses:
-
-Successful operations return HTTP 200 with a JSON payload.
-
-Errors include details in the error field.
+##7. Delete Unverified Users
+Request
+````
+DELETE /control/users/q/IsVerified=false
+````
+Action
+Deletes all users where IsVerified = false.
