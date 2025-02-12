@@ -1,12 +1,6 @@
 # Gin Framework Starter
 
-A starter template built with the **Gin** framework, integrated with:
-
-- **User Authentication** (with email verification)
-- **Google Authentication**
-- **Stripe Payment Integration**
-- **API-based Admin Panel** for easy management of models
-- Supports **PostgreSQL** & **SQLite** databases
+A starter template built with the **Gin** framework
 
 ## Features
 
