@@ -39,7 +39,7 @@ This provides an overview of the predefined authentication middlewares and helpe
 	IsSuperuser
 		Checks if the user is a superuser.
 
-##Use Cases and Examples
+## Use Cases and Examples
 ### 1. Enforcing Authentication (LoginRequired)
 Use this middleware to protect routes that require authentication.
 
@@ -69,7 +69,7 @@ If verification is enabled (VERIFICATION=true) and the user is not verified, the
 
 If verified, the request proceeds.
 
-3. Enforcing Admin Access (RequireAdmin)
+### 3. Enforcing Admin Access (RequireAdmin)
 Use this middleware to restrict access to admin users.
 
 Example:
@@ -83,7 +83,7 @@ If the user is not an admin, they will receive a 403 Forbidden response.
 
 If the user is an admin, the request proceeds.
 
-###4. Enforcing Superuser Access (RequireSuperuser)
+### 4. Enforcing Superuser Access (RequireSuperuser)
 Use this middleware to restrict access to superusers.
 
 Example:
@@ -132,12 +132,12 @@ If the user is not a superuser, a 403 Forbidden response is sent.
 
 If the user is a superuser, the request proceeds.
 
-##Environment Variables
-SECRET: The secret key used to sign and verify JWT tokens.
+## Environment Variables
+	SECRET: The secret key used to sign and verify JWT tokens.
 
-VERIFICATION: Set to "true" to enable verification checks.
+	VERIFICATION: Set to "true" to enable verification checks.
 
-##Example Workflow
+## Example Workflow
 User logs in:
 
 A JWT token is generated and sent to the client (e.g., in a cookie or response body).
