@@ -279,6 +279,8 @@ DELETE /control/users/1
 ## 5. Advanced Query Endpoint (/control/:model/q/:query)
 
 
+# Advanced Query Endpoint (`/q/:query`)
+
 Perform advanced queries on model instances using a flexible syntax. Supports `GET`, `PUT`, and `DELETE` methods.
 
 ---
@@ -293,6 +295,8 @@ Perform advanced queries on model instances using a flexible syntax. Supports `G
 | `( )`    | `BETWEEN` (range)                    | `age(20,30)`                | `age BETWEEN 20 AND 30`        |
 | `&`      | Logical `AND` (within a group)       | `age=25&country=US`         | `age = 25 AND country = 'US'`  |
 | `\|`     | Logical `OR` (between groups)        | `status=pending\|status=approved` | `(status = 'pending') OR (status = 'approved')` |
+| `_&_`    | Groups conditions with **AND**       | `group1_&_group2`           | `(group1) AND (group2)`         |
+| `_|_`    | Groups conditions with **OR**        | `group1_|_group2`           | `(group1) OR (group2)`          |
 
 ---
 
@@ -376,3 +380,18 @@ DELETE /control/users/q/IsVerified=false
 ````
 Action
 Deletes all users where IsVerified = false.
+##8. Grouping Conditions with _&_ and _|_
+Request
+````
+GET /control/users/q/username~jo_|_id(1,5)_&_first_name=john&last_name~tidor
+````
+SQL Equivalent
+
+````sql
+
+SELECT * FROM users 
+WHERE (
+  (username LIKE '%jo%' OR id BETWEEN 1 AND 5)
+) AND (
+  (first_name = 'john' AND last_name LIKE '%tidor%')
+````
