@@ -390,8 +390,5 @@ SQL Equivalent
 ````sql
 
 SELECT * FROM users 
-WHERE (
-  (username LIKE '%jo%' OR id BETWEEN 1 AND 5)
-) AND (
-  (first_name = 'john' AND last_name LIKE '%tidor%')
+WHERE (username LIKE '%jo%' OR id BETWEEN 1 AND 5) AND (first_name = 'john' AND last_name LIKE '%tidor%')
 ````
