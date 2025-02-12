@@ -16,7 +16,22 @@ A starter template built with the **Gin** framework, integrated with:
 - **Admin Panel:** Manage and monitor your models via an intuitive API interface.
 - **Database Support:** Use PostgreSQL or SQLite based on your preference.
 
-# Control Panel API Documentation
+
+#Control Panel
+###Register the Model in the Control Panel
+In the Routes function (usually located in controlpanel/process.go), register your model using the Register method of the Control struct.
+```go
+func Routes(r *gin.Engine) {
+	controlPanel := NewControl(initials.DB)
+
+	// Register Models
+	controlPanel.Register("users", auth.User{})
+	controlPanel.Register("products", Product{}) // Register your new model here
+
+	SetupControlRoutes(r, controlPanel)
+}
+```
+### Control Panel API 
 
 This documentation provides guidance on using the Control Panel API endpoints with Postman. The API allows you to manage registered models (CRUD operations) and perform advanced queries.
 
