@@ -325,7 +325,7 @@ SQL Equivalent
 SELECT * FROM users WHERE is_verified = true
 // Returns all users where IsVerified is true.
 ````
-## 3. Get Users with a Specific First Name and Last Name
+### 3. Get Users with a Specific First Name and Last Name
 Request
 ````
 GET /control/users/q/FirstName=John_&_LastName=Doe
@@ -336,7 +336,7 @@ SELECT * FROM users
 WHERE first_name = 'John' AND last_name = 'Doe'
 //Returns users with FirstName = "John" and LastName = "Doe".
 ````
-## 4. Get Users Created Between Two Dates
+### 4. Get Users Created Between Two Dates
 Request
 ````
 GET /control/users/q/CreatedAt(2023-01-01,2023-12-31)
@@ -347,7 +347,7 @@ SELECT * FROM users
 WHERE created_at BETWEEN '2023-01-01' AND '2023-12-31'
 //Returns users created between January 1, 2023, and December 31, 2023.
 ````
-## 5. Get Admin or Superuser Users
+### 5. Get Admin or Superuser Users
 Request
 ````
 GET /control/users/q/IsAdmin=true_|_IsSuperuser=true
@@ -358,7 +358,7 @@ SELECT * FROM users
 WHERE is_admin = true OR is_superuser = true
 //Returns users who are either admins or superusers.
 ````
-#6. Update Multiple Users (Set as Verified)
+### 6. Update Multiple Users (Set as Verified)
 Request
 ````
 PUT /control/users/q/IsVerified=false
@@ -373,14 +373,14 @@ Body
 Action
 Updates all users where IsVerified = false to IsVerified = true.
 
-##7. Delete Unverified Users
+### 7. Delete Unverified Users
 Request
 ````
 DELETE /control/users/q/IsVerified=false
 ````
 Action
 Deletes all users where IsVerified = false.
-##8. Grouping Conditions with _&_ and _|_
+### 8. Grouping Conditions with _&_ and _|_
 Request
 ````
 GET /control/users/q/username~jo_|_id(1,5)_&_first_name=john&last_name~tidor
