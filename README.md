@@ -17,6 +17,145 @@ A starter template built with the **Gin** framework, integrated with:
 - **Database Support:** Use PostgreSQL or SQLite based on your preference.
 
 
+# Authentication Middleware and Helper Methods
+This provides an overview of the predefined authentication middlewares and helper methods available in the auth package. These methods are used to enforce authentication, verification, and role-based access control in your application.
+
+##Middlewares and Methods Overview
+###Middlewares
+	LoginRequired
+		Ensures the user is authenticated by validating the JWT token.
+	RequireVerification
+		Ensures the user is verified (if verification is enabled).
+	RequireAdmin
+		Ensures the user is an admin.
+	RequireSuperuser
+		Ensures the user is a superuser.
+
+###Helper Methods
+	GetUser
+		Retrieves the authenticated user from the context.
+	IsVerified
+		Checks if the user is verified.
+	IsAdmin
+		Checks if the user is an admin.
+	IsSuperuser
+		Checks if the user is a superuser.
+
+##Use Cases and Examples
+### 1. Enforcing Authentication (LoginRequired)
+Use this middleware to protect routes that require authentication.
+
+Example:
+````go
+r.GET("/protected", auth.LoginRequired, func(c *gin.Context) {
+    user := auth.GetUser(c)
+    c.JSON(http.StatusOK, gin.H{"message": "Welcome, " + user.Username})
+})
+````
+Behavior:
+If the user is not authenticated, they will receive a 401 Unauthorized response.
+
+If authenticated, the user is attached to the context for further use.
+
+###2. Enforcing Verification (RequireVerification)
+Use this middleware to ensure the user is verified (if verification is enabled in the environment).
+
+Example:
+````go
+r.GET("/verified-only", auth.RequireVerification, func(c *gin.Context) {
+    c.JSON(http.StatusOK, gin.H{"message": "You are verified!"})
+})
+````
+Behavior:
+If verification is enabled (VERIFICATION=true) and the user is not verified, they will receive a 403 Forbidden response.
+
+If verified, the request proceeds.
+
+3. Enforcing Admin Access (RequireAdmin)
+Use this middleware to restrict access to admin users.
+
+Example:
+````go
+r.GET("/admin-only", auth.RequireAdmin, func(c *gin.Context) {
+    c.JSON(http.StatusOK, gin.H{"message": "Welcome, Admin!"})
+})
+````
+Behavior:
+If the user is not an admin, they will receive a 403 Forbidden response.
+
+If the user is an admin, the request proceeds.
+
+###4. Enforcing Superuser Access (RequireSuperuser)
+Use this middleware to restrict access to superusers.
+
+Example:
+````go
+r.GET("/superuser-only", auth.RequireSuperuser, func(c *gin.Context) {
+    c.JSON(http.StatusOK, gin.H{"message": "Welcome, Superuser!"})
+})
+````
+Behavior:
+If the user is not a superuser, they will receive a 403 Forbidden response.
+
+If the user is a superuser, the request proceeds.
+
+### 5. Checking Admin Status (IsAdmin)
+Use this method to check if the user is an admin.
+
+Example:
+````go
+r.GET("/check-admin", auth.LoginRequired, func(c *gin.Context) {
+    user := auth.GetUser(c)
+    if auth.IsAdmin(c, user) {
+        c.JSON(http.StatusOK, gin.H{"message": "User is an admin"})
+    }
+})
+````
+Behavior:
+If the user is not an admin, a 403 Forbidden response is sent.
+
+If the user is an admin, the request proceeds.
+
+###8. Checking Superuser Status (IsSuperuser)
+Use this method to check if the user is a superuser.
+
+Example:
+````go
+
+r.GET("/check-superuser", auth.LoginRequired, func(c *gin.Context) {
+    user := auth.GetUser(c)
+    if auth.IsSuperuser(c, user) {
+        c.JSON(http.StatusOK, gin.H{"message": "User is a superuser"})
+    }
+})
+````
+Behavior:
+If the user is not a superuser, a 403 Forbidden response is sent.
+
+If the user is a superuser, the request proceeds.
+
+##Environment Variables
+SECRET: The secret key used to sign and verify JWT tokens.
+
+VERIFICATION: Set to "true" to enable verification checks.
+
+##Example Workflow
+User logs in:
+
+A JWT token is generated and sent to the client (e.g., in a cookie or response body).
+
+User accesses a protected route:
+
+The LoginRequired middleware validates the token and attaches the user to the context.
+
+User accesses an admin-only route:
+
+The RequireAdmin middleware checks if the user is an admin. If not, access is denied.
+
+User accesses a verified-only route:
+
+The RequireVerification middleware checks if the user is verified. If not, access is denied.
+
 #Control Panel
 ###Register the Model in the Control Panel
 In the Routes function (usually located in controlpanel/process.go), register your model using the Register method of the Control struct.
@@ -218,7 +357,7 @@ PUT /control/users/q/IsVerified=false
 ````
 Body
 ````json
-Copy
+
 {
   "IsVerified": true
 }
