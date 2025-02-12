@@ -8,7 +8,8 @@ A starter template built with the **Gin** framework
 - **Google Authentication:** Sign in with Google for easy access.
 - **Stripe Integration:** Payment processing for subscriptions and more.
 - **Admin Panel:** Manage and monitor your models via an intuitive API interface.
-- **Database Support:** Use PostgreSQL or SQLite based on your preference.
+- **Database already integrated:** Use PostgreSQL or SQLite based on your preference.
+- **Basic methods and middlewares:** Integrated methodes and middlewares relavent to auth and permission based accesses.
 
 
 # Authentication Middleware and Helper Methods
