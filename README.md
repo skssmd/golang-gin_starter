@@ -294,9 +294,9 @@ Perform advanced queries on model instances using a flexible syntax. Supports `G
 | `{ }`    | `IN` clause (multiple values)        | `id{1,2,3}`                 | `id IN (1, 2, 3)`              |
 | `( )`    | `BETWEEN` (range)                    | `age(20,30)`                | `age BETWEEN 20 AND 30`        |
 | `&`      | Logical `AND` (within a group)       | `age=25&country=US`         | `age = 25 AND country = 'US'`  |
-| `\|`     | Logical `OR` (between groups)        | `status=pending\|status=approved` | `(status = 'pending') OR (status = 'approved')` |
-| `_&_`    | Groups conditions with **AND**       | `group1_&_group2`           | `(group1) AND (group2)`         |
-| _|_    | Groups conditions with **OR**        | group1_|_group2           | `(group1) OR (group2)`          |
+| `_&_`    | Groups conditions with **AND**       | `group1_&_group2`           | `(group1) AND (group2)`        |
+
+| `_|_`    | Groups conditions with **OR**        | `group1_|_group2`           | `(group1) OR (group2)`         |
 
 ---
 
