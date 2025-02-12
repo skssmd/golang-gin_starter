@@ -3,7 +3,7 @@
 A starter template built with the **Gin** framework
 
 ## Features
-
+- **Auth:** Sign Up, Log in, Verification with Jwt access and refresh token.
 - **Email Verification:** Automatically send verification emails upon user registration.
 - **Google Authentication:** Sign in with Google for easy access.
 - **Stripe Integration:** Payment processing for subscriptions and more.
