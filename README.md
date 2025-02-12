@@ -22,13 +22,17 @@ This provides an overview of the predefined authentication middlewares and helpe
 
 ##Middlewares and Methods Overview
 ###Middlewares
+
 	LoginRequired
 		Ensures the user is authenticated by validating the JWT token.
-	RequireVerification
+
+ 	RequireVerification
 		Ensures the user is verified (if verification is enabled).
-	RequireAdmin
+	
+ 	RequireAdmin
 		Ensures the user is an admin.
-	RequireSuperuser
+	
+ 	RequireSuperuser
 		Ensures the user is a superuser.
 
 ###Helper Methods
