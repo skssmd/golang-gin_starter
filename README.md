@@ -159,9 +159,9 @@ The RequireAdmin middleware checks if the user is an admin. If not, access is de
 User accesses a verified-only route:
 
 The RequireVerification middleware checks if the user is verified. If not, access is denied.
-
-#Control Panel
-###Register the Model in the Control Panel
+---
+# Control Panel
+### Register the Model in the Control Panel
 In the Routes function (usually located in controlpanel/process.go), register your model using the Register method of the Control struct.
 ```go
 func Routes(r *gin.Engine) {
