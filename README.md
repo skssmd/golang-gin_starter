@@ -1,4 +1,4 @@
-# Gin Framework Starter Template
+# Gin Framework Starter
 
 A starter template built with the **Gin** framework, integrated with:
 
