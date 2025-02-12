@@ -322,7 +322,7 @@ SELECT * FROM users WHERE is_verified = true
 ### 3. Get Users with a Specific First Name and Last Name
 Request
 ````
-GET /control/users/q/FirstName=John_&_LastName=Doe
+GET /control/users/q/FirstName=John&LastName=Doe
 ````
 SQL Equivalent
 ````sql
@@ -344,7 +344,7 @@ WHERE created_at BETWEEN '2023-01-01' AND '2023-12-31'
 ### 5. Get Admin or Superuser Users
 Request
 ````
-GET /control/users/q/IsAdmin=true_|_IsSuperuser=true
+GET /control/users/q/IsAdmin=true|IsSuperuser=true
 ````
 SQL Equivalent
 ```sql
@@ -377,7 +377,7 @@ Deletes all users where IsVerified = false.
 ### 8. Grouping Conditions with _&_ and _|_
 Request
 ````
-GET /control/users/q/username~jo_|_id(1,5)_&_first_name=john&last_name~tidor
+GET /control/users/q/username~jo|id(1,5)_&_first_name=john&last_name~tidor
 ````
 SQL Equivalent
 
